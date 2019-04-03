@@ -8,7 +8,6 @@ class EventClient:
         self.google_analytics_client = google_analytics_client
 
     def send_events(self, event_list, user_agent):
-        print user_agent
         valid_event_list = []
 
         for event in event_list:

@@ -2,7 +2,8 @@ required_fields_dict = {
     'client_id': 'cid',
     'local_id': 'local_id',
     'event_category': 'ec',
-    'event_action': 'ea'
+    'event_action': 'ea',
+    'creation_time': 'creation_time'
 }
 
 

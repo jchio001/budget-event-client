@@ -1,20 +1,20 @@
-from sqlalchemy import BigInteger, Column, create_engine, String, UniqueConstraint
+from datetime import datetime
+from sqlalchemy import BigInteger, Column, create_engine, String, PrimaryKeyConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.sql import func
 
 import json
 import os
 
 db_url = os.environ['events_db_url']
-db = create_engine('')
+db = create_engine(db_url)
 base = declarative_base()
 
 
 class InvalidDbEvent(base):
     __tablename__ = 'invalid_db_event'
     __table_args__ = (
-        UniqueConstraint('client_id', 'local_id', name='unique_client_id_and_local_id_constraint')
+        PrimaryKeyConstraint('client_id', 'local_id', name='unique_client_id_and_local_id_constraint'),
     )
 
     # This is going to be a UUID generated on the client's side.
@@ -31,7 +31,7 @@ class InvalidDbEvent(base):
     client_creation_time = Column(BigInteger, nullable=False)
 
     # The time at which an event is inserted into the database.
-    db_insertion_time = Column(BigInteger, server_default=func.now().timestamp(), nullable=False)
+    db_insertion_time = Column(BigInteger, default=datetime.now(), nullable=False)
 
     # All the other fields attached to an event that we don't really want to query on.
     body = Column(String, nullable=False)

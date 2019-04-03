@@ -11,8 +11,8 @@ db = create_engine('')
 base = declarative_base()
 
 
-class DbEvent(base):
-    __tablename__ = 'event'
+class InvalidDbEvent(base):
+    __tablename__ = 'invalid_db_event'
     __table_args__ = (
         UniqueConstraint('client_id', 'local_id', name='unique_client_id_and_local_id_constraint')
     )
@@ -24,21 +24,21 @@ class DbEvent(base):
     # will be used to prevent duplicate events from being resent.
     local_id = Column(String, nullable=False)
 
+    # User-Agent header from the request.
+    user_agent = Column(String, nullable=False)
+
     # The time at which an event is created on the client.
     client_creation_time = Column(BigInteger, nullable=False)
 
-    # The time at which an event is inserted into the client.
+    # The time at which an event is inserted into the database.
     db_insertion_time = Column(BigInteger, server_default=func.now().timestamp(), nullable=False)
-
-    # The time at which an event has successfully been uploaded to Google Analytics.
-    upload_time = Column(BigInteger, nullable=True)
 
     # All the other fields attached to an event that we don't really want to query on.
     body = Column(String, nullable=False)
 
     @staticmethod
-    def from_dict(event_dict):
-        db_event = DbEvent()
+    def from_dict(event_dict, user_agent):
+        db_event = InvalidDbEvent()
 
         db_event.client_id = event_dict.get('client_id')
         db_event.local_id = event_dict.get('local_id')

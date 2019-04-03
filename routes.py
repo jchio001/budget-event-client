@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/events', methods=['POST'])
 def post_events(*args, **kwargs):
     event_list = json.loads(request.data)
-    EventsClient().send_events(event_list=event_list, user_agent = request.headers.get('User-Agent'))
+    EventsClient().send_events(event_list=event_list, user_agent=request.headers.get('User-Agent'))
     return Response(status=200)
 
 

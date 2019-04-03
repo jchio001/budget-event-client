@@ -18,20 +18,20 @@ class InvalidDbEvent(base):
     )
 
     # This is going to be a UUID generated on the client's side.
-    client_id = Column(String, nullable=False)
+    client_id = Column(String, nullable=False, index=True)
 
     # This is going to a local id used to uniquely identify an event on the client side. This combined with the UUID
     # will be used to prevent duplicate events from being resent.
-    local_id = Column(String, nullable=False)
+    local_id = Column(String, nullable=False, index=True)
 
     # User-Agent header from the request.
-    user_agent = Column(String, nullable=False)
+    user_agent = Column(String, nullable=False, index=True)
 
     # The time at which an event is created on the client.
-    client_creation_time = Column(BigInteger, nullable=False)
+    client_creation_time = Column(BigInteger, nullable=False, index=True)
 
     # The time at which an event is inserted into the database.
-    db_insertion_time = Column(BigInteger, default=datetime.now(), nullable=False)
+    db_insertion_time = Column(BigInteger, default=datetime.now(), nullable=False, index=True)
 
     # All the other fields attached to an event that we don't really want to query on.
     body = Column(String, nullable=False)

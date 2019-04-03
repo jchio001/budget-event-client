@@ -1,13 +1,16 @@
 from event_utils import get_missing_fields_for_event
-from google_analytics_client import GoogleAnalyticsClient
+from event_dao import EventDao
+from models import DbEvent, session
 
 
-class EventClient:
+class EventsClient:
 
-    def __init__(self, google_analytics_client=GoogleAnalyticsClient()):
-        self.google_analytics_client = google_analytics_client
+    def __init__(self, event_dao=EventDao(session=session)):
+        self.event_dao = event_dao
 
+    # TODO: Make user agent a field in the event model
     def send_events(self, event_list, user_agent):
+        invalid_event_list = []
         valid_event_list = []
 
         for event in event_list:
@@ -15,7 +18,8 @@ class EventClient:
             if missing_fields:
                 # TODO: Store this into a database
                 print "Missing fields: %s" % missing_fields
+                invalid_event_list.append(invalid_event_list)
             else:
                 valid_event_list.append(event)
 
-        self.google_analytics_client.send_events(event_list=valid_event_list, user_agent=user_agent)
+        self.event_dao.store_events(list(map(DbEvent.from_dict, valid_event_list)))

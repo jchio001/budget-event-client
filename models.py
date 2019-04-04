@@ -36,13 +36,17 @@ class InvalidDbEvent(base):
     # All the other fields attached to an event that we don't really want to query on.
     body = Column(String, nullable=False)
 
+    invalid_reason = Column(String, nullable=False)
+
     @staticmethod
-    def from_dict(event_dict, user_agent):
+    def from_dict(event_dict, invalid_reason, user_agent):
         db_event = InvalidDbEvent()
 
         db_event.client_id = event_dict.get('client_id')
         db_event.local_id = event_dict.get('local_id')
         db_event.creation_time = event_dict.get('creation_time')
+        db_event.user_agent = user_agent
+        db_event.invalid_reason = invalid_reason
 
         event_dict.pop('client_id', None)
         event_dict.pop('local_id', None)

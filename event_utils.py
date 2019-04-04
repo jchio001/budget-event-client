@@ -8,10 +8,10 @@ required_fields_dict = {
 
 
 def get_missing_fields_for_event(event):
-    missing_fields = []
+    missing_fields = set()
 
     for field in required_fields_dict.keys():
         if not event.get(field):
-            missing_fields.append(field)
+            missing_fields.add(field)
 
     return missing_fields

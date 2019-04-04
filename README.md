@@ -10,7 +10,7 @@ I would <b>not</b> recommend using this for any serious application development.
 ## Running locally
 
 Please ensure that the following tools are installed on your laptop:
-- Python 2.7 (NOTE: Python 2.7 is the default on Mac!
+- Python 2.7.x (NOTE: Python 2.7 is the default on Mac!)
 - virtualenv (This should be done after installing Python3! Virtualenvs allows us to isolate python dependencies for a 
 project, meaning that we have multiple projects cleanly running multiple different versions of a library. [Here's a 
 good guide on installing and setting up a virtualenv.](

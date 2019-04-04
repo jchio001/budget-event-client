@@ -1,0 +1,11 @@
+{
+  "name": "budget-events-client",
+  "description": "A basic events client.",
+  "repository": "https://heroku.com/deploy?template=https://github.com/jchio001/budget-event-client",
+  "logo": "https://i.imgur.com/MGS3wP3.jpg",
+  "keywords": [
+    "python",
+    "python 2.7.10",
+    "postgresql"
+  ]
+}
